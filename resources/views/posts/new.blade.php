@@ -23,7 +23,7 @@
                                         <input type="text" class="form-control" placeholder="" name="title">
                                         <small class="error">{{$errors->first('title')}}</small>
                                     </div>
-                                    
+                                    <br>
                                     <div class="form-group">
                                         <label for="description"> Description</label>
                                         <textarea name="description" id="description" cols="30" rows="10" class="form-control" placeholder=""></textarea>
