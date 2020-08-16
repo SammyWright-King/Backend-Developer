@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
+use App\Post as Post;
 class PostsController extends Controller
 {
+    public function __construct(Post $post)
+    {
+        $this->post = $post;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +18,12 @@ class PostsController extends Controller
     public function index()
     {
         //
-        $posts = Post::all();
-        return view('posts.index')->with('posts',$posts);
+        /* $posts = Post::all();
+        $data['posts'] = $this->post->all();
+        return view('posts.index')->with('posts',$posts); */
+        $data = [];
+        $data['posts'] = $this->post->all();
+        return view('posts.index', $data);
     }
 
     /**
@@ -26,6 +34,7 @@ class PostsController extends Controller
     public function create()
     {
         //
+        return view('posts.new');
     }
 
     /**
@@ -34,9 +43,26 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
         //
+        $data = [];
+        $data['title'] = $request->input('title');
+        $data['body'] = $request->input('description');
+
+        if ( $request->isMethod('post') )
+        {
+            $this->validate($request, 
+            [
+                'title' => 'required',
+                
+            ]
+        );
+            $post->insert($data);
+            return redirect('posts');
+        }
+        
+        return view('posts.new', $data);
     }
 
     /**
@@ -45,9 +71,18 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($post_id)
     {
         //
+        $data = [];
+        $data['post_id'] = $post_id;
+        $post = $this->post->with('answers')->findOrFail($post_id);
+        $data['post'] = $post;
+        $data['answers'] = $post->answers;
+        $data['count'] = count($data['answers']);
+        
+        return view('posts.post', $data);
+      
     }
 
     /**
@@ -79,15 +114,13 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post, $post_id)
     {
         //
+        $data = [];
+        $data['posts']= $this->post->destroy($post_id); 
+        return redirect('posts');
     }
 
-    public function post()
-    {
-        $data = [];
-        $data['posts'] = [1,4,8];
-        return view('posts.post', $data);
-    }
+    
 }

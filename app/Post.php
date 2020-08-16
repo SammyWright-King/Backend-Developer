@@ -13,4 +13,9 @@ class Post extends Model
     //time stamps
     public $timestamps = true;
 
+    public function answers()
+    {
+        return $this->hasMany('App\Answer');
+    }
+
 }

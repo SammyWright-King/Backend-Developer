@@ -32,7 +32,21 @@ Route::get('/services','PagesController@services')->name('services');
 
 Route::get('/contact', 'PagesController@contact')->name('contact');
 
-Route::get('/p', 'PostsController@post')->name('posts');
+Route::get('/posts', 'PostsController@index')->name('posts');
+
+Route::get('/posts/new', 'PostsController@store')->name('new_post');
+Route::post('/posts/new', 'PostsController@store')->name('store_post');
+Route::get('/posts/{post_id}', 'PostsController@show')->name('replies');
+Route::post('/posts/{post_id}/update', 'PostsController@update')->name('update_post');
+Route::get('/posts/{post_id}/delete', 'PostsController@destroy')->name('delete_post');
 
 
-Route::resource('posts','PostsController');
+Route::get('/posts/answer/{answer_id}', 'AnswerController@destroy')->name('delete_answer');
+Route::get('/posts/{post_id}/answer/{answer_id}','AnswerController@show');
+Route::put('/posts/{post_id}/answer/{answer_id}', 'AnswerController@update');
+
+
+
+
+
+
