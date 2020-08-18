@@ -20,7 +20,7 @@
                         @foreach ($posts as $post)
                             <div class="col-md-4 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
                                 <div class="blog-entry">
-                                    <a href="{{ route('replies', ['post_id'=>$post->id]) }}" class="blog-img"><img src="images/blog-1.jpg" class="img-responsive" alt="HTML5 Bootstrap Template by colorlib.com"></a>
+                                    <a href="{{ route('replies', ['post_id'=>$post->id]) }}" class="blog-img"><img src="{{asset('images/blog-1.jpg')}}" class="img-responsive" alt="HTML5 Bootstrap Template by colorlib.com"></a>
                                     <div class="desc">
                                         <span><small>{{ $post->created_at}}</small> | <small> Web Design </small> | <small> <i class="icon-bubble3"></i> </small></span>
                                         <h3><a href="{{ route('replies', ['post_id'=>$post->id]) }}">{{$post->title}}</a></h3>

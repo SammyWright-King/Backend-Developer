@@ -42,6 +42,7 @@ Route::get('/posts/{post_id}/delete', 'PostsController@destroy')->name('delete_p
 
 
 Route::get('/posts/answer/{answer_id}', 'AnswerController@destroy')->name('delete_answer');
+Route::post('/post/{post_id}/answer', 'AnswerController@save')->name('save_answer');
 Route::get('/posts/{post_id}/answer/{answer_id}','AnswerController@show');
 Route::put('/posts/{post_id}/answer/{answer_id}', 'AnswerController@update');
 

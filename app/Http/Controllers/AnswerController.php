@@ -26,4 +26,22 @@ class AnswerController extends Controller
         echo"record successfully deleted";
         
     }
+
+    public function save(Request $request, Answer $answer, $post_id)
+    {
+        $data = [];
+        $data['post_id'] = $post_id;
+        $data['answer'] = $request->input('answer');
+        if( $request->isMethod('post') )
+        {
+            $this->validate($request,
+                [
+                    'answer' => 'required',
+                ]
+            );
+            $answer->insert($data);
+            return redirect("{{url('/posts/$post_id')}}");
+        }
+
+    }
 }
